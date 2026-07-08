@@ -1,3 +1,9 @@
+# Purpose of Development
+Film simulation ideas often come to mind when the camera is not nearby, making them difficult to record or remember accurately. This app was created as a simple place to save those ideas immediately and organize them for later use.
+It also helps prevent recipe settings from being lost when a saved camera preset is accidentally changed and the original values can no longer be recalled.
+Since many cameras provide only a limited number of custom preset slots, the app serves as an external recipe library. Users can store a larger collection of film simulation recipes, review them at any time, and quickly transfer the settings back to the camera when needed.
+
+
 # Film Recipe Note v6
 
 ## Background
