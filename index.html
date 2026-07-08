@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#121212">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Film Simulation Note">
+  <meta name="description" content="필름 시뮬레이션 레시피를 기록하고 관리하는 개인용 웹앱">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>Film Simulation Note</title>
+</head>
+<body>
+  <div class="bg color-mode" aria-hidden="true"></div>
+
+  <main class="app">
+    <section id="landing" class="landing">
+      <div class="brand-pill">FUJIFILM SIMULATION</div>
+      <h1>Film Simulation<br>Note</h1>
+      <p>빛, 색, 기억을 레시피로 보관합니다.</p>
+      <button id="enterBtn" class="enter-btn" type="button">ENTER</button>
+      <small class="unofficial-note">Unofficial personal recipe tool. Not affiliated with FUJIFILM Corporation.</small>
+    </section>
+
+    <section id="workspace" class="workspace hidden">
+      <header class="topbar">
+        <div>
+          <div class="mini-brand">FUJIFILM SIMULATION</div>
+          <h2>My Recipes</h2>
+        </div>
+
+        <div class="top-actions">
+          <div class="backup-actions">
+            <label class="text-tool file-icon" title="사진 배경 선택" aria-label="사진 배경 선택">
+              배경
+              <input id="backgroundInput" type="file" accept="image/*">
+            </label>
+            <button id="resetBackgroundBtn" class="text-tool" type="button" title="단색 배경 선택">기본</button>
+            <button id="backupBtn" class="text-tool" type="button" title="백업">백업</button>
+            <label class="text-tool file-icon" title="복구" aria-label="복구">
+              복구
+              <input id="restoreInput" type="file" accept="application/json,.json">
+            </label>
+          </div>
+          <button id="newBtn" class="round-btn" type="button" title="새 레시피">＋</button>
+        </div>
+      </header>
+
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="레시피, 시뮬레이션, 설명 검색">
+        <select id="categoryFilter" aria-label="카테고리 필터">
+          <option value="">전체</option>
+          <option>Daily</option>
+          <option>Portrait</option>
+          <option>Street</option>
+          <option>City</option>
+          <option>Night</option>
+          <option>Cloudy</option>
+          <option>Sunny</option>
+          <option>Landscape</option>
+          <option>Travel</option>
+          <option>Indoor</option>
+          <option>B&amp;W</option>
+          <option>Test</option>
+        </select>
+      </div>
+
+      <section id="recipeList" class="recipe-list"></section>
+    </section>
+  </main>
+
+  <dialog id="colorPaletteDialog" class="palette-dialog">
+    <div class="palette-panel">
+      <div class="dialog-head">
+        <div>
+          <h3>단색 배경</h3>
+          <p>사용할 기본 배경색을 선택하세요.</p>
+        </div>
+        <button type="button" id="paletteCloseBtn" class="icon-btn">×</button>
+      </div>
+
+      <div id="colorPalette" class="color-palette">
+        <button class="color-swatch" type="button" data-color="#FFFFFF" style="--swatch:#FFFFFF"><span>#FFFFFF</span></button>
+        <button class="color-swatch" type="button" data-color="#F5F5F7" style="--swatch:#F5F5F7"><span>#F5F5F7</span></button>
+        <button class="color-swatch" type="button" data-color="#DCE4DE" style="--swatch:#DCE4DE"><span>#DCE4DE</span></button>
+        <button class="color-swatch" type="button" data-color="#1D2A3A" style="--swatch:#1D2A3A"><span>#1D2A3A</span></button>
+        <button class="color-swatch" type="button" data-color="#121212" style="--swatch:#121212"><span>#121212</span></button>
+        <button class="color-swatch" type="button" data-color="#FFECF1" style="--swatch:#FFECF1"><span>#FFECF1</span></button>
+        <button class="color-swatch" type="button" data-color="#FFF9E6" style="--swatch:#FFF9E6"><span>#FFF9E6</span></button>
+        <button class="color-swatch" type="button" data-color="#040720" style="--swatch:#040720"><span>#040720</span></button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="editor">
+    <form method="dialog" id="recipeForm">
+      <div class="dialog-head">
+        <h3 id="dialogTitle">레시피 추가</h3>
+        <button type="button" id="closeDialog" class="icon-btn">×</button>
+      </div>
+
+      <input type="hidden" id="recipeId">
+
+      <div class="cover-edit">
+        <img id="coverPreview" src="./assets/default-cover.jpg" alt="레시피 대표 이미지 미리보기">
+        <div>
+          <label class="file-label strong">
+            사진앱에서 대표 이미지 추가
+            <input id="photoInput" type="file" accept="image/*">
+          </label>
+          <button id="removePhotoBtn" type="button">기본 이미지로</button>
+          <p>선택한 사진은 서버로 전송되지 않고 이 기기의 IndexedDB에 저장됩니다.</p>
+        </div>
+      </div>
+
+      <div class="section-title">레시피 정보</div>
+      <div class="form-stack">
+        <div class="layout-row cols-2">
+          <label class="field-card">
+            <span class="field-title">레시피 이름</span>
+            <input id="name" required placeholder="Gray Concrete">
+          </label>
+
+          <label class="field-card">
+            <span class="field-title">카테고리</span>
+            <select id="category">
+              <option>Daily</option><option>Portrait</option><option>Street</option>
+              <option>City</option><option>Night</option><option>Cloudy</option>
+              <option>Sunny</option><option>Landscape</option><option>Travel</option>
+              <option>Indoor</option><option>B&amp;W</option><option>Test</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field-card">
+          <span class="field-title">레시피 설명</span>
+          <textarea id="description" rows="2" placeholder="이 레시피의 색감과 사용 목적을 기록"></textarea>
+        </label>
+      </div>
+
+      <div class="section-title">촬영 조건</div>
+      <div class="form-stack">
+        <div class="layout-row cols-2">
+          <label class="field-card">
+            <span class="field-title">ISO 기준</span>
+            <select id="iso">
+              <option value="ISO125+">ISO 125 이상</option>
+              <option value="ISO250+">ISO 250 이상</option>
+              <option value="ISO500+">ISO 500 이상</option>
+            </select>
+          </label>
+
+          <label class="field-card">
+            <span class="field-title">노출 보정</span>
+            <select id="exposure"></select>
+          </label>
+        </div>
+      </div>
+
+      <div class="section-title">이미지 품질 설정</div>
+      <div class="form-stack">
+        <label class="field-card">
+          <span class="field-title">필름 시뮬레이션</span>
+          <select id="filmSimulation">
+            <option>PROVIA / STANDARD</option>
+            <option>Velvia / VIVID</option>
+            <option>ASTIA / SOFT</option>
+            <option>Classic Chrome</option>
+            <option>REALA ACE</option>
+            <option>PRO Neg. Hi</option>
+            <option>PRO Neg. Std</option>
+            <option>Classic Negative</option>
+            <option>Nostalgic Neg.</option>
+            <option>Eterna</option>
+            <option>Eterna Bleach Bypass</option>
+            <option>ACROS</option>
+            <option>Monochrome</option>
+            <option>Sepia</option>
+          </select>
+        </label>
+
+        <div id="monochromeBlock" class="field-card conditional-field disabled-field">
+          <span class="field-title">모노크롬 색상</span>
+          <select id="monochromeFilter" disabled>
+            <option value="#N/A">#N/A</option>
+            <option value="STD">STD</option>
+            <option value="Ye">Ye</option>
+            <option value="R">R</option>
+            <option value="G">G</option>
+          </select>
+
+          <div id="monochromeToneTabs" class="mini-tabs hidden">
+            <label>
+              <span>WC</span>
+              <select id="monochromeWc"></select>
+            </label>
+            <label>
+              <span>MG</span>
+              <select id="monochromeMg"></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-card">
+          <span class="field-title">그레인 효과</span>
+          <div class="dual-select">
+            <label><span>강도</span>
+              <select id="grainStrength">
+                <option>OFF</option><option>WEAK</option><option>STRONG</option>
+              </select>
+            </label>
+            <label><span>크기</span>
+              <select id="grainSize">
+                <option>SMALL</option><option>LARGE</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="layout-row cols-3 compact-row">
+          <label class="field-card">
+            <span class="field-title">컬러크롬 효과</span>
+            <select id="colorChrome">
+              <option>OFF</option><option>WEAK</option><option>STRONG</option>
+            </select>
+          </label>
+
+          <label class="field-card long-label">
+            <span class="field-title">컬러크롬 FX 블루</span>
+            <select id="colorChromeBlue">
+              <option>OFF</option><option>WEAK</option><option>STRONG</option>
+            </select>
+          </label>
+
+          <label class="field-card">
+            <span class="field-title">피부 보정 효과</span>
+            <select id="skinEffect">
+              <option>OFF</option><option>WEAK</option><option>STRONG</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="field-card">
+          <span class="field-title">화이트 밸런스</span>
+          <select id="whiteBalanceMode">
+            <option>Auto 화이트우선</option>
+            <option>Auto</option>
+            <option>Auto 분위기 우선</option>
+            <option>색 온도</option>
+            <option>일광</option>
+            <option>흐린날</option>
+            <option>형광등1</option>
+            <option>형광등2</option>
+            <option>형광등3</option>
+            <option>전구</option>
+            <option>수중</option>
+          </select>
+
+          <div class="wb-detail-grid">
+            <label id="colorTemperatureWrap" class="temperature-field disabled-field">
+              <span>K</span>
+              <input id="colorTemperature" type="text" inputmode="numeric" placeholder="#N/A" disabled>
+            </label>
+            <label>
+              <span>R Tint</span>
+              <select id="wbRed"></select>
+            </label>
+            <label>
+              <span>B Tint</span>
+              <select id="wbBlue"></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="layout-row cols-2">
+          <label class="field-card">
+            <span class="field-title">다이내믹 레인지</span>
+            <select id="dynamicRange">
+              <option>DR100</option><option>DR200</option><option>DR400</option><option>AUTO</option>
+            </select>
+          </label>
+
+          <div class="field-card tone-card">
+            <span class="field-title">톤 곡선</span>
+            <div class="dual-select">
+              <label><span>하이라이트</span><select id="highlight"></select></label>
+              <label><span>섀도</span><select id="shadow"></select></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="layout-row cols-4 compact-row detail-row">
+          <label class="field-card">
+            <span class="field-title">색농도</span>
+            <select id="color"></select>
+          </label>
+
+          <label class="field-card">
+            <span class="field-title">샤프니스</span>
+            <select id="sharpness"></select>
+          </label>
+
+          <label class="field-card long-label">
+            <span class="field-title">고감도 노이즈 감소</span>
+            <select id="highIsoNr"></select>
+          </label>
+
+          <label class="field-card">
+            <span class="field-title">선명도</span>
+            <select id="clarity"></select>
+          </label>
+        </div>
+
+        <label class="field-card long-label">
+          <span class="field-title">장노출 노이즈 리덕션</span>
+          <select id="longExposureNr">
+            <option>OFF</option><option>ON</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="memo-label field-card">
+        <span class="field-title">촬영 메모</span>
+        <textarea id="memo" rows="4" placeholder="잘 어울리는 빛, 장소, 피부톤, 계절 등을 기록"></textarea>
+      </label>
+
+      <label class="favorite-line"><input id="favorite" type="checkbox"> 즐겨찾기</label>
+
+      <div class="dialog-actions">
+        <button id="duplicateBtn" type="button">복제</button>
+        <button id="deleteBtn" type="button" class="danger">삭제</button>
+        <button id="copyBtn" type="button">설정 복사</button>
+        <button id="saveBtn" value="default" class="primary">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
