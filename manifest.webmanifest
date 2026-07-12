@@ -1,7 +1,7 @@
 {
   "name": "Film Simulation Note",
   "short_name": "Film Simulation Note",
-  "description": "필름 시뮬레이션 레시피를 기록하고 관리하는 개인용 웹앱",
+  "description": "필름 시뮬레이션 레시피를 기록하고 후지 JPEG에서 레시피 값을 읽는 개인용 웹앱",
   "lang": "ko",
   "start_url": "./",
   "scope": "./",

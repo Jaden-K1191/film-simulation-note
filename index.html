@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Film Simulation Note">
-  <meta name="description" content="필름 시뮬레이션 레시피를 기록하고 관리하는 개인용 웹앱">
+  <meta name="description" content="필름 시뮬레이션 레시피를 기록하고, 후지 원본 JPEG에서 레시피 값을 읽어 저장하는 개인용 웹앱">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
   <link rel="icon" href="./icons/icon-192.png">
@@ -19,7 +19,7 @@
 
   <main class="app">
     <section id="landing" class="landing">
-      <div class="brand-pill">FUJIFILM SIMULATION</div>
+      <div class="brand-pill">FILM SIMULATION NOTE · v7</div>
       <h1>Film Simulation<br>Note</h1>
       <p>빛, 색, 기억을 레시피로 보관합니다.</p>
       <button id="enterBtn" class="enter-btn" type="button">ENTER</button>
@@ -29,7 +29,7 @@
     <section id="workspace" class="workspace hidden">
       <header class="topbar">
         <div>
-          <div class="mini-brand">FUJIFILM SIMULATION</div>
+          <div class="mini-brand">FILM SIMULATION NOTE · v7</div>
           <h2>My Recipes</h2>
         </div>
 
@@ -50,26 +50,107 @@
         </div>
       </header>
 
-      <div class="toolbar">
-        <input id="searchInput" type="search" placeholder="레시피, 시뮬레이션, 설명 검색">
-        <select id="categoryFilter" aria-label="카테고리 필터">
-          <option value="">전체</option>
-          <option>Daily</option>
-          <option>Portrait</option>
-          <option>Street</option>
-          <option>City</option>
-          <option>Night</option>
-          <option>Cloudy</option>
-          <option>Sunny</option>
-          <option>Landscape</option>
-          <option>Travel</option>
-          <option>Indoor</option>
-          <option>B&amp;W</option>
-          <option>Test</option>
-        </select>
-      </div>
+      <nav class="view-tabs" aria-label="기능 선택">
+        <button id="notesTab" class="view-tab active" type="button">Recipe Note</button>
+        <button id="readerTab" class="view-tab" type="button">JPEG Reader</button>
+      </nav>
 
-      <section id="recipeList" class="recipe-list"></section>
+      <section id="notesView" class="notes-view">
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="레시피, 시뮬레이션, 설명 검색">
+          <select id="categoryFilter" aria-label="카테고리 필터">
+            <option value="">전체</option>
+            <option>Daily</option>
+            <option>Portrait</option>
+            <option>Street</option>
+            <option>City</option>
+            <option>Night</option>
+            <option>Cloudy</option>
+            <option>Sunny</option>
+            <option>Landscape</option>
+            <option>Travel</option>
+            <option>Indoor</option>
+            <option>B&amp;W</option>
+            <option>Test</option>
+          </select>
+        </div>
+
+        <section id="recipeList" class="recipe-list"></section>
+      </section>
+
+      <section id="readerView" class="reader-view hidden" aria-label="JPEG Reader">
+        <div class="reader-panel reader-uploader">
+          <div class="reader-panel-head">
+            <div>
+              <h3>Fuji JPEG Recipe Reader</h3>
+              <p>후지 원본 JPEG에서 EXIF / MakerNote 값을 읽고 바로 레시피 노트에 저장합니다.</p>
+            </div>
+            <button id="readerHelpBtn" class="text-tool" type="button">안내</button>
+          </div>
+
+          <label id="readerDropZone" class="reader-drop" for="readerFileInput">
+            <input id="readerFileInput" type="file" accept="image/jpeg,.jpg,.jpeg" hidden>
+            <span class="reader-drop-icon">⤴</span>
+            <strong>후지 원본 JPEG 선택</strong>
+            <small>탭해서 선택하거나 파일을 끌어놓으세요.</small>
+          </label>
+
+          <div id="readerStatus" class="reader-status idle">
+            <strong>대기 중</strong>
+            <span>JPEG 파일을 선택하면 분석 결과가 표시됩니다.</span>
+          </div>
+        </div>
+
+        <div class="reader-grid">
+          <div class="reader-col">
+            <section class="reader-panel">
+              <div class="reader-panel-head compact">
+                <h3>미리보기</h3>
+                <span id="readerFileName" class="reader-muted">선택된 파일 없음</span>
+              </div>
+              <div class="reader-preview-wrap">
+                <img id="readerPreviewImage" alt="선택한 JPEG 미리보기" hidden>
+                <div id="readerPreviewPlaceholder" class="reader-placeholder">이미지를 불러오면 여기에 표시됩니다.</div>
+              </div>
+            </section>
+
+            <section class="reader-panel">
+              <h3>카메라 / 촬영 정보</h3>
+              <div id="readerCameraInfo" class="reader-kv-grid"></div>
+            </section>
+
+            <section class="reader-panel">
+              <h3>노출 정보</h3>
+              <div id="readerExposureInfo" class="reader-kv-grid"></div>
+            </section>
+          </div>
+
+          <div class="reader-col">
+            <section class="reader-panel accent-reader-panel">
+              <div class="reader-panel-head compact">
+                <h3>레시피 분석 결과</h3>
+                <button id="readerSaveBtn" class="primary small" type="button" disabled>노트에 저장</button>
+              </div>
+              <div id="readerRecipeInfo" class="reader-kv-grid"></div>
+              <p class="reader-save-note">저장 시 원본 사진은 저장하지 않고, 앱 내부용 커버 이미지만 1MB 이하로 축소/압축합니다.</p>
+            </section>
+
+            <section class="reader-panel">
+              <h3>추가 메타데이터</h3>
+              <div id="readerExtraInfo" class="reader-kv-grid"></div>
+            </section>
+
+            <section class="reader-panel">
+              <h3>주의사항</h3>
+              <ul class="reader-warning-list">
+                <li>원본 Fujifilm JPEG 기준으로 가장 정확합니다.</li>
+                <li>Lightroom, Photoshop, 메신저, SNS를 거친 JPEG는 MakerNote가 제거될 수 있습니다.</li>
+                <li>JPEG 안에는 사용자가 만든 레시피 이름은 보통 저장되지 않습니다. 저장 후 이름을 직접 수정하세요.</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -337,6 +418,24 @@
         <button id="saveBtn" value="default" class="primary">저장</button>
       </div>
     </form>
+  </dialog>
+
+
+  <dialog id="readerHelpDialog" class="reader-help-dialog">
+    <div class="palette-panel reader-help-panel">
+      <div class="dialog-head">
+        <div>
+          <h3>JPEG Reader 안내</h3>
+          <p>원본 JPEG에서 읽을 수 있는 값만 자동 입력됩니다.</p>
+        </div>
+        <button type="button" id="readerHelpCloseBtn" class="icon-btn">×</button>
+      </div>
+      <ul class="reader-warning-list">
+        <li>카메라 모델, 렌즈, 셔터속도, 조리개, ISO, 촬영일시를 읽습니다.</li>
+        <li>후지 MakerNote가 남아 있으면 필름 시뮬레이션, WB, DR, 톤곡선, 그레인, 컬러크롬 등을 읽습니다.</li>
+        <li>노트에 저장할 때 사진은 크롭하지 않고, 긴 변과 JPEG 품질만 낮춰 1MB 이하 커버 이미지로 저장합니다.</li>
+      </ul>
+    </div>
   </dialog>
 
   <script src="./app.js"></script>
