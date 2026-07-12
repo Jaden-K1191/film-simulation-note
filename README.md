@@ -3,6 +3,31 @@ Film simulation ideas often come to mind when the camera is not nearby, making t
 It also helps prevent recipe settings from being lost when a saved camera preset is accidentally changed and the original values can no longer be recalled.
 Since many cameras provide only a limited number of custom preset slots, the app serves as an external recipe library. Users can store a larger collection of film simulation recipes, review them at any time, and quickly transfer the settings back to the camera when needed.
 
+## v7 Update: Integrated JPEG Reader
+
+Film Simulation Note now includes an integrated JPEG Reader.
+
+Users can load an original Fujifilm JPEG, read available EXIF and Fujifilm MakerNote metadata, and save the detected film simulation settings directly as a new recipe.
+
+Detected settings may include:
+
+- Film Simulation
+- White Balance and WB Shift
+- Dynamic Range
+- Highlight / Shadow Tone
+- Color
+- Sharpness
+- High ISO NR
+- Clarity
+- Grain Effect
+- Color Chrome Effect
+- Color Chrome FX Blue
+
+When saving a JPEG as a recipe cover image, the app does not store the original full-size file. The image is resized and compressed in the browser while keeping the original composition and aspect ratio. The saved cover image is compressed to approximately 1 MB or less.
+
+All processing is done locally in the browser. Images are not uploaded to any server.
+
+For best results, use original JPEG files directly from a Fujifilm camera. Edited or exported JPEG files may not contain Fujifilm MakerNote data.
 
 # Film Recipe Note v6
 
