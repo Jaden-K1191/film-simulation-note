@@ -1,4 +1,4 @@
-const CACHE_NAME = "film-simulation-note-v7-integrated";
+const CACHE_NAME = "film-simulation-note-v7-final-copyright";
 
 const APP_ASSETS = [
   "./",

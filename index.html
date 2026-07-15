@@ -24,6 +24,7 @@
       <p>빛, 색, 기억을 레시피로 보관합니다.</p>
       <button id="enterBtn" class="enter-btn" type="button">ENTER</button>
       <small class="unofficial-note">Unofficial personal recipe tool. Not affiliated with FUJIFILM Corporation.</small>
+      <button id="landingAboutBtn" class="about-link" type="button">저작권 및 이용 안내 · Copyright</button>
     </section>
 
     <section id="workspace" class="workspace hidden">
@@ -35,6 +36,7 @@
 
         <div class="top-actions">
           <div class="backup-actions">
+            <button id="aboutBtn" class="text-tool info-tool" type="button" title="저작권 및 이용 안내" aria-label="저작권 및 이용 안내">ⓘ</button>
             <label class="text-tool file-icon" title="사진 배경 선택" aria-label="사진 배경 선택">
               배경
               <input id="backgroundInput" type="file" accept="image/*">
@@ -435,6 +437,92 @@
         <li>후지 MakerNote가 남아 있으면 필름 시뮬레이션, WB, DR, 톤곡선, 그레인, 컬러크롬 등을 읽습니다.</li>
         <li>노트에 저장할 때 사진은 크롭하지 않고, 긴 변과 JPEG 품질만 낮춰 1MB 이하 커버 이미지로 저장합니다.</li>
       </ul>
+    </div>
+  </dialog>
+
+
+  <dialog id="aboutDialog" class="about-dialog">
+    <div class="about-panel">
+      <div class="dialog-head">
+        <div>
+          <h3>저작권 및 이용 안내</h3>
+          <p>Copyright and Terms of Use</p>
+        </div>
+        <button type="button" id="aboutCloseBtn" class="icon-btn" aria-label="닫기">×</button>
+      </div>
+
+      <div class="about-scroll">
+        <section class="about-section" lang="ko">
+          <div class="language-badge">한국어</div>
+          <h4>Film Simulation Note</h4>
+          <p><strong>Copyright © 2026 Jaden_fujipuerson (KIM JEONGHA).<br>All Rights Reserved.</strong></p>
+
+          <p>본 애플리케이션과 소스코드의 저작권은 Jaden_fujipuerson (KIM JEONGHA)에게 있습니다.</p>
+          <p>본 애플리케이션은 개인적이고 비상업적인 목적으로만 사용할 수 있습니다.</p>
+
+          <p>저작권자의 사전 서면 허가 없이 다음 행위는 허용되지 않습니다.</p>
+          <ul>
+            <li>본 애플리케이션 또는 소스코드의 재배포</li>
+            <li>수정본, 복제본 또는 파생 프로그램의 공개 배포</li>
+            <li>상업적 이용, 판매 또는 유료 서비스에 포함하는 행위</li>
+            <li>다른 제품, 웹사이트 또는 애플리케이션에 포함하여 배포하는 행위</li>
+            <li>저작권 표시를 삭제하거나 변경하는 행위</li>
+          </ul>
+
+          <p>개인적인 학습과 비공개 사용을 목적으로 소스코드를 수정하는 것은 허용됩니다. 다만 수정본을 다른 사람에게 배포하거나 공개해서는 안 됩니다.</p>
+
+          <h5>데이터 및 개인정보</h5>
+          <p>선택한 이미지의 분석, 압축 및 레시피 처리는 사용자의 브라우저 안에서 수행됩니다. 앱은 사용자의 사진이나 레시피 데이터를 별도 서버로 전송하지 않습니다.</p>
+          <p>레시피, 설정 및 압축된 커버 이미지는 브라우저의 IndexedDB에 저장됩니다. 브라우저 데이터 삭제, 기기 변경 또는 저장공간 정리로 데이터가 손실될 수 있으므로 중요한 데이터는 정기적으로 백업하시기 바랍니다.</p>
+          <p>개발자는 사용자의 데이터 손실이나 본 앱 사용으로 발생한 직접적·간접적 손해에 대해 책임을 지지 않습니다.</p>
+
+          <h5>상표 및 비공식 도구 안내</h5>
+          <p>본 앱은 개인이 제작한 비공식 도구이며 FUJIFILM Corporation과 제휴, 승인 또는 후원 관계가 없습니다. FUJIFILM 및 관련 제품명과 상표는 각 권리자의 소유입니다.</p>
+
+          <h5>문의</h5>
+          <p>Jaden_fujipuerson (KIM JEONGHA)<br>
+          <a href="mailto:restinmylife@naver.com">restinmylife@naver.com</a></p>
+        </section>
+
+        <hr class="about-divider">
+
+        <section class="about-section" lang="en">
+          <div class="language-badge">English</div>
+          <h4>Film Simulation Note</h4>
+          <p><strong>Copyright © 2026 Jaden_fujipuerson (KIM JEONGHA).<br>All Rights Reserved.</strong></p>
+
+          <p>This application and its source code are copyrighted by Jaden_fujipuerson (KIM JEONGHA).</p>
+          <p>This application may be used for personal and non-commercial purposes only.</p>
+
+          <p>The following activities are not permitted without prior written permission from the copyright holder:</p>
+          <ul>
+            <li>Redistribution of the application or its source code</li>
+            <li>Public distribution of modified, copied, or derivative versions</li>
+            <li>Commercial use, resale, or inclusion in a paid service</li>
+            <li>Distribution as part of another product, website, or application</li>
+            <li>Removal or modification of copyright notices</li>
+          </ul>
+
+          <p>The source code may be modified for personal learning and private use. Modified versions may not be published or distributed to other parties.</p>
+
+          <h5>Data and Privacy</h5>
+          <p>Image analysis, compression, and recipe processing are performed locally in the user's browser. The application does not upload photographs or recipe data to a separate server.</p>
+          <p>Recipes, settings, and compressed cover images are stored in the browser using IndexedDB. Data may be lost when browser data is cleared, when devices are changed, or when local storage is removed. Users should create regular backups of important data.</p>
+          <p>The developer is not responsible for data loss or for any direct or indirect damages arising from use of this application.</p>
+
+          <h5>Trademark and Unofficial Tool Notice</h5>
+          <p>This is an unofficial, independently developed tool and is not affiliated with, endorsed by, or sponsored by FUJIFILM Corporation. FUJIFILM and related product names and trademarks belong to their respective owners.</p>
+
+          <h5>Contact</h5>
+          <p>Jaden_fujipuerson (KIM JEONGHA)<br>
+          <a href="mailto:restinmylife@naver.com">restinmylife@naver.com</a></p>
+        </section>
+      </div>
+
+      <div class="about-footer">
+        <span>Film Simulation Note · v7 Final</span>
+        <button type="button" id="aboutConfirmBtn" class="primary small">확인</button>
+      </div>
     </div>
   </dialog>
 

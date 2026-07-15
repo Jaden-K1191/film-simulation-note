@@ -1,0 +1,63 @@
+﻿저작권 및 이용 안내
+Copyright and Terms of Use
+
+[한국어]
+
+Film Simulation Note
+
+Copyright © 2026 Jaden_fujipuerson (KIM JEONGHA)
+All Rights Reserved.
+
+본 애플리케이션과 소스코드의 저작권은 Jaden_fujipuerson (KIM JEONGHA)에게 있습니다.
+본 애플리케이션은 개인적이고 비상업적인 목적으로만 사용할 수 있습니다.
+
+저작권자의 사전 서면 허가 없이 다음 행위는 허용되지 않습니다.
+
+- 본 애플리케이션 또는 소스코드의 재배포
+- 수정본, 복제본 또는 파생 프로그램의 공개 배포
+- 상업적 이용, 판매 또는 유료 서비스에 포함하는 행위
+- 다른 제품, 웹사이트 또는 애플리케이션에 포함하여 배포하는 행위
+- 저작권 표시를 삭제하거나 변경하는 행위
+
+개인적인 학습과 비공개 사용을 목적으로 소스코드를 수정하는 것은 허용됩니다.
+다만 수정본을 다른 사람에게 배포하거나 공개해서는 안 됩니다.
+
+본 앱은 개인이 제작한 비공식 도구이며 FUJIFILM Corporation과 제휴, 승인 또는 후원 관계가 없습니다.
+FUJIFILM 및 관련 제품명과 상표는 각 권리자의 소유입니다.
+
+문의:
+Jaden_fujipuerson (KIM JEONGHA)
+restinmylife@naver.com
+
+
+[English]
+
+Film Simulation Note
+
+Copyright © 2026 Jaden_fujipuerson (KIM JEONGHA)
+All Rights Reserved.
+
+This application and its source code are copyrighted by
+Jaden_fujipuerson (KIM JEONGHA).
+
+This application may be used for personal and non-commercial purposes only.
+
+The following activities are not permitted without prior written permission
+from the copyright holder:
+
+- Redistribution of the application or its source code
+- Public distribution of modified, copied, or derivative versions
+- Commercial use, resale, or inclusion in a paid service
+- Distribution as part of another product, website, or application
+- Removal or modification of copyright notices
+
+The source code may be modified for personal learning and private use.
+Modified versions may not be published or distributed to other parties.
+
+This is an unofficial, independently developed tool and is not affiliated with,
+endorsed by, or sponsored by FUJIFILM Corporation.
+FUJIFILM and related product names and trademarks belong to their respective owners.
+
+Contact:
+Jaden_fujipuerson (KIM JEONGHA)
+restinmylife@naver.com

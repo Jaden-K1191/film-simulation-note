@@ -1878,6 +1878,25 @@ $("readerSaveBtn").addEventListener("click", saveReaderRecipeToNote);
 $("readerHelpBtn").addEventListener("click", () => $("readerHelpDialog").showModal());
 $("readerHelpCloseBtn").addEventListener("click", () => $("readerHelpDialog").close());
 
+function openAboutDialog() {
+  const dialog = $("aboutDialog");
+  if (dialog && !dialog.open) dialog.showModal();
+}
+
+function closeAboutDialog() {
+  const dialog = $("aboutDialog");
+  if (dialog && dialog.open) dialog.close();
+}
+
+$("aboutBtn").addEventListener("click", openAboutDialog);
+$("landingAboutBtn").addEventListener("click", openAboutDialog);
+$("aboutCloseBtn").addEventListener("click", closeAboutDialog);
+$("aboutConfirmBtn").addEventListener("click", closeAboutDialog);
+$("aboutDialog").addEventListener("click", (event) => {
+  if (event.target === $("aboutDialog")) closeAboutDialog();
+});
+
+
 
 $("newBtn").addEventListener("click", () => openEditor());
 $("closeDialog").addEventListener("click", () => $("editor").close());

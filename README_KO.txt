@@ -1,4 +1,4 @@
-Film Simulation Note v7 Integrated
+﻿Film Simulation Note v7 Integrated
 
 용도
 ----
@@ -25,3 +25,14 @@ v7 주요 변경
 배포
 ----
 ZIP 압축을 푼 뒤 안의 파일과 폴더를 GitHub Pages 저장소 루트에 업로드하세요. ZIP 파일 자체를 업로드하는 방식이 아닙니다.
+
+v7 Final - 저작권 및 이용 안내
+-----------------------------
+- 앱 상단의 ⓘ 버튼과 시작 화면의 '저작권 및 이용 안내 · Copyright'에서 안내문을 확인할 수 있습니다.
+- 한국어 안내가 먼저 표시되고, 영문 안내가 이어서 표시됩니다.
+- 개인적·비상업적 이용만 허용됩니다.
+- 상업적 이용, 재배포 및 수정본 공개 배포는 허용되지 않습니다.
+- 저작권자: Jaden_fujipuerson (KIM JEONGHA)
+- 문의: restinmylife@naver.com
+- 별도 LICENSE_KO_EN.txt 파일이 포함되어 있습니다.
+- 모든 웹 소스 파일은 UTF-8로 저장되었으며, LICENSE/README 텍스트는 한글 호환성을 위해 UTF-8 BOM 형식으로 제공됩니다.
